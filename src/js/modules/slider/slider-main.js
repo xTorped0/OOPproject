@@ -1,8 +1,11 @@
 import Slider from "./slider"
 
 export default class MainSlider extends Slider {
-	constructor(btns) {
-		super(btns)
+	constructor({ prev, next }) {
+		super(...arguments)
+
+		this.prev = document.querySelectorAll(prev)
+		this.next = document.querySelectorAll(next)
 	}
 
 	showSlides(n) {
@@ -34,14 +37,7 @@ export default class MainSlider extends Slider {
 		this.showSlides(this.slideIndex += n)
 	}
 
-	render() {
-		try {
-			this.hanson = document.querySelector('.hanson')
-		} catch(err) {
-			console.error(err);
-		}
-
-
+	bindTriggers() {
 		this.btns.forEach(btn => {
 			btn.onclick = () => { this.plusSlides(1) }
 
@@ -53,7 +49,34 @@ export default class MainSlider extends Slider {
 				this.showSlides(this.slideIndex)
 			}
 		})
+
+		this.prev.forEach(btn => {
+			btn.onclick = (e) => { 
+				e.preventDefault()
+				e.stopPropagation()
+				this.plusSlides(-1) 
+			}
+		})
+
+		this.next.forEach(btn => {
+			btn.onclick = (e) => { 
+				e.preventDefault()
+				e.stopPropagation()
+				this.plusSlides(1) 
+			}
+		})
+	}
+
+	render() {
+		if(!this.container) return
+
+		try {
+			this.hanson = document.querySelector('.hanson')
+		} catch(err) {
+			// console.error(err);
+		}
 		
+		this.bindTriggers()
 		this.showSlides(this.slideIndex)
 	}
 }

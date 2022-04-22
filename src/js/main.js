@@ -1,11 +1,14 @@
+import Accordion from "./modules/accordion"
+import Difference from "./modules/difference"
+import Download from "./modules/download"
 import VideoPlayer from "./modules/playVideo"
 import MainSlider from "./modules/slider/slider-main"
 import MiniSlider from "./modules/slider/slider-mini"
 
 
 window.addEventListener('DOMContentLoaded', () => {
-	const slider = new MainSlider({ container: '.page', btns: '.next' })
-	slider.render()
+	new MainSlider({ container: '.page', btns: '.next' }).render()
+	new MainSlider({ container: '.moduleapp', btns: '.next', prev: '.prevmodule', next: '.nextmodule' }).render()
 
 	const showUpSlider = new MiniSlider({
 		container: '.showup__content-slider',
@@ -35,6 +38,12 @@ window.addEventListener('DOMContentLoaded', () => {
 	feedSlider.init()
 
 
-	const player = new VideoPlayer('.showup .play', '.overlay')
-	player.init()
+	new VideoPlayer('.showup .play', '.overlay').init()
+	new VideoPlayer('.module__video-item .play', '.overlay').init()
+
+	new Difference('.officerold', '.officerold .officer__card-item').init()
+	new Difference('.officernew', '.officernew .officer__card-item').init()
+
+	new Accordion('.module__info-show').init()
+	new Download('.download').init()
 })

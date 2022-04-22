@@ -7,7 +7,7 @@ export default class Slider {
 		} = {}) {
 		this.container = document.querySelector(container)
 		this.btns = document.querySelectorAll(btns) || []
-		this.slides = this.container.children
+		this.slides = this.container && this.container.children
 
 		this.prev = document.querySelector(prev)
 		this.next = document.querySelector(next)

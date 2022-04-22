@@ -36,17 +36,30 @@ export default class MiniSlider extends Slider {
 		this.decorizeSlides()
 	}
 
+	setAutoplay() {
+		if(!this.autoplay)  return
+		const createInterval = () => setInterval(() => { this.nextSlide() }, 5000)
+
+		let interval = createInterval()
+		
+		this.container.onmouseover = () => {	clearInterval(interval) }
+		this.container.onmouseleave = () => { interval = createInterval() }
+	}
+
 	init() {
-		this.container.style.cssText = `
-			display: flex;
-			flex-wrap: wrap;
-			overflow: hidden;
-			align-items: flex-start;
-		`;
-
-		this.bindTriggers()
-		this.decorizeSlides()
-
-		if(this.autoplay)  setInterval(() => { this.nextSlide() }, 5000)
+		try{
+			this.container.style.cssText = `
+				display: flex;
+				flex-wrap: wrap;
+				overflow: hidden;
+				align-items: flex-start;
+			`;
+	
+			this.bindTriggers()
+			this.decorizeSlides()
+			this.setAutoplay()
+		} catch(e) {
+			// console.error(e)
+		}
 	}
 }
